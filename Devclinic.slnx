@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Contexts/" />
+  <Folder Name="/Contexts/Appointments/">
+    <Project Path="contexts/Appointments/Devclinic.Appointments/Devclinic.Appointments.csproj" />
+  </Folder>
+</Solution>
