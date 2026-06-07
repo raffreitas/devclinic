@@ -34,8 +34,8 @@ public sealed class Appointment
         Time = time;
         Status = AppointmentStatus.Scheduled;
 
-        _domainEvents.Add(new AppointmentScheduled(id, patientId, doctorId, time));
         _statusHistory.Add(new StatusChange(Status, DateTime.UtcNow));
+        _domainEvents.Add(new AppointmentScheduled(id, patientId, doctorId, time));
     }
 
     public void Confirm()
@@ -45,8 +45,8 @@ public sealed class Appointment
 
         Status = AppointmentStatus.Confirmed;
 
-        _domainEvents.Add(new AppointmentConfirmedEvent(PatientId, DoctorId, Time));
         _statusHistory.Add(new StatusChange(Status, DateTime.UtcNow));
+        _domainEvents.Add(new AppointmentConfirmedEvent(Id, PatientId, DoctorId, Time));
     }
 
     public void Cancel(string cancellationReason)
@@ -58,6 +58,7 @@ public sealed class Appointment
         CancellationReason = new CancellationReason(cancellationReason);
 
         _statusHistory.Add(new StatusChange(Status, DateTime.UtcNow));
+        _domainEvents.Add(new AppointmentCancelledEvent(Id, PatientId, DoctorId, CancellationReason));
     }
 
     public void Reschedule(AppointmentTime newTime)
