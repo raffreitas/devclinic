@@ -28,7 +28,6 @@ public sealed class ScheduleAppointmentUseCase(
         if (!await patientService.ExistsAsync(patientId, ct))
             throw new InvalidOperationException("The patient does not exist.");
 
-
         var doctorId = new DoctorId(command.DoctorId);
         if (!await doctorService.ExistsAsync(doctorId, ct))
             throw new InvalidOperationException("The doctor does not exist.");
@@ -49,6 +48,8 @@ public sealed class ScheduleAppointmentUseCase(
 
         foreach (var @event in appointment.DomainEvents)
             await eventBus.PublishAsync(@event, ct);
+
+        appointment.ClearDomainEvents();
 
         return appointment.Id;
     }

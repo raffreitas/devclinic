@@ -19,6 +19,7 @@ public sealed class Appointment
 
     private readonly List<IDomainEvent> _domainEvents = [];
     public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    public void ClearDomainEvents() => _domainEvents.Clear();
 
 
     public Appointment(
@@ -44,6 +45,7 @@ public sealed class Appointment
 
         Status = AppointmentStatus.Confirmed;
 
+        _domainEvents.Add(new AppointmentConfirmedEvent(PatientId, DoctorId, Time));
         _statusHistory.Add(new StatusChange(Status, DateTime.UtcNow));
     }
 
