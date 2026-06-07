@@ -1,4 +1,4 @@
-﻿using Devclinic.Appointments.Common.SeedWork;
+﻿using Devclinic.Appointments.Domain.SeedWork;
 using Devclinic.Appointments.Domain.ValueObjects;
 
 namespace Devclinic.Appointments.Domain.Events;

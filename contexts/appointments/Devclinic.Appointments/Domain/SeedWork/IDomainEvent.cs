@@ -1,4 +1,4 @@
-﻿namespace Devclinic.Appointments.Common.SeedWork;
+﻿namespace Devclinic.Appointments.Domain.SeedWork;
 
 public interface IDomainEvent
 {

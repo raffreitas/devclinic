@@ -1,3 +1,3 @@
-﻿namespace Devclinic.Appointments.Common.SeedWork;
+﻿namespace Devclinic.Appointments.Domain.SeedWork;
 
 public class DomainException(string message) : Exception(message);

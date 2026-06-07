@@ -1,6 +1,6 @@
-﻿using Devclinic.Appointments.Common.SeedWork;
-using Devclinic.Appointments.Domain.Enums;
+﻿using Devclinic.Appointments.Domain.Enums;
 using Devclinic.Appointments.Domain.Events;
+using Devclinic.Appointments.Domain.SeedWork;
 using Devclinic.Appointments.Domain.ValueObjects;
 
 namespace Devclinic.Appointments.Domain;
