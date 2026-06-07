@@ -9,4 +9,9 @@ public interface IAppointmentRepository
 
     Task<Appointment?> GetByIdAsync(AppointmentId appointmentId, CancellationToken ct = default);
     Task<Appointment?> GetByDoctorAndTimeAsync(DoctorId doctorId, AppointmentTime time, CancellationToken ct = default);
+
+    Task<Appointment?> GetByPatientAndTimeAsync(
+        PatientId patientId,
+        AppointmentTime time,
+        CancellationToken ct = default);
 }
