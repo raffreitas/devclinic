@@ -1,4 +1,6 @@
-﻿namespace Devclinic.Appointments.Domain.Abstractions;
+﻿using Devclinic.Appointments.Domain.ValueObjects;
+
+namespace Devclinic.Appointments.Domain.Abstractions;
 
 public interface IAppointmentRepository
 {

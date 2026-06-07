@@ -1,5 +1,6 @@
 ﻿using Devclinic.Appointments.Domain;
 using Devclinic.Appointments.Domain.Abstractions;
+using Devclinic.Appointments.Domain.ValueObjects;
 
 namespace Devclinic.Appointments.Features.ScheduleAppointment;
 

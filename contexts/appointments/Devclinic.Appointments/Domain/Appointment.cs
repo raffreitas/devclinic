@@ -1,4 +1,7 @@
 ﻿using Devclinic.Appointments.Common.SeedWork;
+using Devclinic.Appointments.Domain.Enums;
+using Devclinic.Appointments.Domain.Events;
+using Devclinic.Appointments.Domain.ValueObjects;
 
 namespace Devclinic.Appointments.Domain;
 
@@ -30,14 +33,14 @@ public sealed class Appointment
         Time = time;
         Status = AppointmentStatus.Scheduled;
 
+        _domainEvents.Add(new AppointmentScheduled(id, patientId, doctorId, time));
         _statusHistory.Add(new StatusChange(Status, DateTime.UtcNow));
     }
 
     public void Confirm()
     {
         if (Status != AppointmentStatus.Scheduled)
-            throw new InvalidOperationException(
-                "Only scheduled appointments can be confirmed.");
+            throw new DomainException("Only scheduled appointments can be confirmed.");
 
         Status = AppointmentStatus.Confirmed;
 
@@ -47,8 +50,7 @@ public sealed class Appointment
     public void Cancel(string cancellationReason)
     {
         if (string.IsNullOrWhiteSpace(cancellationReason))
-            throw new InvalidOperationException(
-                "A cancellation reason is required.");
+            throw new DomainException("A cancellation reason is required.");
 
         Status = AppointmentStatus.Cancelled;
         CancellationReason = new CancellationReason(cancellationReason);
@@ -59,34 +61,11 @@ public sealed class Appointment
     public void Reschedule(AppointmentTime newTime)
     {
         if (Status == AppointmentStatus.Cancelled)
-            throw new InvalidOperationException(
-                "Cancelled appointments cannot be rescheduled.");
+            throw new DomainException("Cancelled appointments cannot be rescheduled.");
 
         Status = AppointmentStatus.Rescheduled;
         Time = newTime;
 
         _statusHistory.Add(new StatusChange(Status, DateTime.UtcNow));
     }
-}
-
-public sealed record AppointmentId(Guid Value);
-
-public sealed record PatientId(Guid Value);
-
-public sealed record DoctorId(Guid Value);
-
-public sealed record AppointmentTime(DateTime Value);
-
-public sealed record StatusChange(
-    AppointmentStatus Status,
-    DateTime OccurredAt);
-
-public sealed record CancellationReason(string Value);
-
-public enum AppointmentStatus
-{
-    Scheduled,
-    Confirmed,
-    Rescheduled,
-    Cancelled
 }
