@@ -13,8 +13,8 @@ public sealed record ScheduleAppointmentCommand(
 public sealed class ScheduleAppointmentUseCase(
     IDoctorService doctorService,
     IPatientService patientService,
-    IAppointmentRepository appointmentRepository
-)
+    IAppointmentRepository appointmentRepository,
+    IEventBus eventBus)
 {
     public async Task<AppointmentId> ExecuteAsync(ScheduleAppointmentCommand command, CancellationToken ct = default)
     {
@@ -33,7 +33,6 @@ public sealed class ScheduleAppointmentUseCase(
         if (!await doctorService.ExistsAsync(doctorId, ct))
             throw new InvalidOperationException("The doctor does not exist.");
 
-
         var existingAppointment = await appointmentRepository.GetByDoctorAndTimeAsync(doctorId, time, ct);
 
         if (existingAppointment is not null)
@@ -47,6 +46,9 @@ public sealed class ScheduleAppointmentUseCase(
         );
 
         await appointmentRepository.AddAsync(appointment, ct);
+
+        foreach (var @event in appointment.DomainEvents)
+            await eventBus.PublishAsync(@event, ct);
 
         return appointment.Id;
     }
