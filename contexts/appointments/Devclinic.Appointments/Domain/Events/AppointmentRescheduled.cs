@@ -3,9 +3,7 @@ using Devclinic.Appointments.Domain.ValueObjects;
 
 namespace Devclinic.Appointments.Domain.Events;
 
-public sealed record AppointmentScheduled(
+public sealed record AppointmentRescheduled(
     AppointmentId AppointmentId,
-    PatientId PatientId,
-    DoctorId DoctorId,
-    AppointmentTime Time,
+    AppointmentTime NewTime,
     DateTime OccurredAt) : IDomainEvent;

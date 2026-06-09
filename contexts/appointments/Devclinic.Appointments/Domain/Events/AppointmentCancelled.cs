@@ -3,8 +3,7 @@ using Devclinic.Appointments.Domain.ValueObjects;
 
 namespace Devclinic.Appointments.Domain.Events;
 
-public sealed record AppointmentConfirmedEvent(
+public sealed record AppointmentCancelled(
     AppointmentId AppointmentId,
-    PatientId PatientId,
-    DoctorId DoctorId,
-    AppointmentTime Time) : DomainEvent;
+    CancellationReason Reason,
+    DateTime OccurredAt) : IDomainEvent;
