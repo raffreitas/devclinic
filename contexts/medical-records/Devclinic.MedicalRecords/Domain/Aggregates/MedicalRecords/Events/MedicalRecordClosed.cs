@@ -3,7 +3,13 @@ using Devclinic.MedicalRecords.Domain.Shared.ValueObjects;
 
 namespace Devclinic.MedicalRecords.Domain.Aggregates.MedicalRecords.Events;
 
-public sealed record MedicalRecordCreated(
+public sealed record MedicalRecordClosed(
     MedicalRecordId MedicalRecordId,
-    PatientId PatientId,
+    MedicalRecordClosureReason Reason,
     DateTime OccurredAt) : IDomainEvent;
+
+public enum MedicalRecordClosureReason
+{
+    PatientDeceased,
+    TransferRequested
+}

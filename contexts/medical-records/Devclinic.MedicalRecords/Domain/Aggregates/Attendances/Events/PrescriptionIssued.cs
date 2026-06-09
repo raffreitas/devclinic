@@ -1,3 +1,12 @@
-﻿namespace Devclinic.MedicalRecords.Domain.Aggregates.Attendances.Events;
+﻿using Devclinic.MedicalRecords.Domain.Aggregates.Attendances.ValueObjects;
+using Devclinic.MedicalRecords.Domain.SeedWork;
+using Devclinic.MedicalRecords.Domain.Shared.ValueObjects;
 
-public sealed record PrescriptionIssued();
+namespace Devclinic.MedicalRecords.Domain.Aggregates.Attendances.Events;
+
+public sealed record PrescriptionIssued(
+    AttendanceId AttendanceId,
+    PrescriptionId PrescriptionId,
+    Medication Medication,
+    Dosage Dosage,
+    DateTime OccurredAt) : IDomainEvent;

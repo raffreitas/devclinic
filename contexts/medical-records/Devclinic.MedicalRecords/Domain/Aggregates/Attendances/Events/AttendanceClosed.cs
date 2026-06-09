@@ -1,3 +1,10 @@
-﻿namespace Devclinic.MedicalRecords.Domain.Aggregates.Attendances.Events;
+﻿using Devclinic.MedicalRecords.Domain.Aggregates.Attendances.ValueObjects;
+using Devclinic.MedicalRecords.Domain.SeedWork;
+using Devclinic.MedicalRecords.Domain.Shared.ValueObjects;
 
-public sealed record AttendanceClosed();
+namespace Devclinic.MedicalRecords.Domain.Aggregates.Attendances.Events;
+
+public sealed record AttendanceClosed(
+    AttendanceId AttendanceId,
+    DoctorId ClosedBy,
+    DateTime OccurredAt) : IDomainEvent;

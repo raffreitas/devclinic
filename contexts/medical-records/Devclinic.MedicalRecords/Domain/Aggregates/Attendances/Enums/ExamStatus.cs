@@ -1,7 +1,7 @@
 ﻿namespace Devclinic.MedicalRecords.Domain.Aggregates.Attendances.Enums;
 
-public enum AttendanceStatus
+public enum ExamStatus
 {
-    InProgress,
-    Closed
+    Pending,
+    ResultReceived,
 }
