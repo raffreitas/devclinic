@@ -94,7 +94,7 @@ public sealed class MedicalRecord
         Status = MedicalRecordStatus.Closed;
     }
 
-    #endregion"
+    #endregion
 
     public void ClearUnpublishedEvents() => _unpublishedEvents.Clear();
 }

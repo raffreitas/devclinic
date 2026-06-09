@@ -14,7 +14,6 @@ public sealed class PrescriptionService
         Medication medication,
         Dosage dosage)
     {
-        // Regra de domínio — vive aqui, não na camada de aplicação
         if (medicalRecord.HasAllergyTo(medication))
             throw new DomainException(
                 $"Cannot prescribe '{medication.Name}' — patient has a registered allergy to '{medication.ActiveSubstance}'.");
