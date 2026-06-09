@@ -4,4 +4,7 @@
     <Project Path="contexts/appointments/Devclinic.Appointments.Tests/Devclinic.Appointments.Tests.csproj" />
     <Project Path="contexts/Appointments/Devclinic.Appointments/Devclinic.Appointments.csproj" />
   </Folder>
+  <Folder Name="/Contexts/MedicalRecords/">
+    <Project Path="contexts/medical-records/Devclinic.MedicalRecords/Devclinic.MedicalRecords.csproj" />
+  </Folder>
 </Solution>
