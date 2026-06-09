@@ -1,4 +1,5 @@
-﻿using Devclinic.MedicalRecords.Domain.Aggregates.MedicalRecords.Events;
+﻿using Devclinic.MedicalRecords.Domain.Aggregates.MedicalRecords.Enums;
+using Devclinic.MedicalRecords.Domain.Aggregates.MedicalRecords.Events;
 using Devclinic.MedicalRecords.Domain.Aggregates.MedicalRecords.ValueObjects;
 using Devclinic.MedicalRecords.Domain.SeedWork;
 using Devclinic.MedicalRecords.Domain.Shared.ValueObjects;

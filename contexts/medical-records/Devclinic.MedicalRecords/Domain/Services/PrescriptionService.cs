@@ -1,4 +1,5 @@
 ﻿using Devclinic.MedicalRecords.Domain.Aggregates.Attendances;
+using Devclinic.MedicalRecords.Domain.Aggregates.Attendances.ValueObjects;
 using Devclinic.MedicalRecords.Domain.Aggregates.MedicalRecords;
 using Devclinic.MedicalRecords.Domain.SeedWork;
 using Devclinic.MedicalRecords.Domain.Shared.ValueObjects;
