@@ -9,7 +9,7 @@ using Devclinic.Appointments.Domain.ValueObjects;
 
 using NSubstitute;
 
-namespace Devclinic.Appointments.Tests.Application;
+namespace Devclinic.Appointments.UnitTests.Application;
 
 public sealed class RescheduleAppointmentUseCaseTests
 {

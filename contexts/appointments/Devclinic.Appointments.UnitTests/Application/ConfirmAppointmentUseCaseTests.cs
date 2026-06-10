@@ -9,7 +9,7 @@ using Devclinic.Appointments.Domain.ValueObjects;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 
-namespace Devclinic.Appointments.Tests.Application;
+namespace Devclinic.Appointments.UnitTests.Application;
 
 public sealed class ConfirmAppointmentUseCaseTests
 {

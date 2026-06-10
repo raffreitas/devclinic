@@ -4,7 +4,7 @@ using Devclinic.Appointments.Domain.Events;
 using Devclinic.Appointments.Domain.SeedWork;
 using Devclinic.Appointments.Domain.ValueObjects;
 
-namespace Devclinic.Appointments.Tests.Domain;
+namespace Devclinic.Appointments.UnitTests.Domain;
 
 public sealed class AppointmentTests
 {

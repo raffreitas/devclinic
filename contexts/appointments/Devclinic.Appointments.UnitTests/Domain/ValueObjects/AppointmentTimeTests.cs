@@ -1,6 +1,6 @@
 using Devclinic.Appointments.Domain.ValueObjects;
 
-namespace Devclinic.Appointments.Tests.Domain.ValueObjects;
+namespace Devclinic.Appointments.UnitTests.Domain.ValueObjects;
 
 public sealed class AppointmentTimeTests
 {

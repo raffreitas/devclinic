@@ -1,11 +1,17 @@
 <Solution>
   <Folder Name="/Contexts/" />
   <Folder Name="/Contexts/Appointments/">
-    <Project Path="contexts/appointments/Devclinic.Appointments.Tests/Devclinic.Appointments.Tests.csproj" />
-    <Project Path="contexts/Appointments/Devclinic.Appointments/Devclinic.Appointments.csproj" />
+    <Project Path="contexts/appointments/Devclinic.Appointments.Api/Devclinic.Appointments.Api.csproj" />
+    <Project Path="contexts/appointments/Devclinic.Appointments.Application/Devclinic.Appointments.Application.csproj" />
+    <Project Path="contexts/appointments/Devclinic.Appointments.Domain/Devclinic.Appointments.Domain.csproj" />
+    <Project Path="contexts/appointments/Devclinic.Appointments.Infrastructure/Devclinic.Appointments.Infrastructure.csproj" />
+    <Project Path="contexts/appointments/Devclinic.Appointments.UnitTests/Devclinic.Appointments.UnitTests.csproj" />
   </Folder>
   <Folder Name="/Contexts/MedicalRecords/">
-    <Project Path="contexts/medical-records/Devclinic.MedicalRecords.Tests/Devclinic.MedicalRecords.Tests.csproj" />
-    <Project Path="contexts/medical-records/Devclinic.MedicalRecords/Devclinic.MedicalRecords.csproj" />
+    <Project Path="contexts/medical-records/Devclinic.MedicalRecords.Api/Devclinic.MedicalRecords.Api.csproj" />
+    <Project Path="contexts/medical-records/Devclinic.MedicalRecords.Application/Devclinic.MedicalRecords.Application.csproj" />
+    <Project Path="contexts/medical-records/Devclinic.MedicalRecords.Domain/Devclinic.MedicalRecords.Domain.csproj" />
+    <Project Path="contexts/medical-records/Devclinic.MedicalRecords.Infrastructure/Devclinic.MedicalRecords.Infrastructure.csproj" />
+    <Project Path="contexts/medical-records/Devclinic.MedicalRecords.UnitTests/Devclinic.MedicalRecords.UnitTests.csproj" />
   </Folder>
 </Solution>
