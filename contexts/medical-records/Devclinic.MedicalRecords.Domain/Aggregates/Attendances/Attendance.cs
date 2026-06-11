@@ -20,6 +20,7 @@ public sealed class Attendance
     public DoctorId DoctorId { get; private set; } = null!;
     public AttendanceStatus Status { get; private set; }
     public ChiefComplaint? ChiefComplaint { get; private set; }
+    public DoctorId? ClosedBy { get; private set; }
 
     public IReadOnlyList<Diagnosis> Diagnoses => _diagnoses.AsReadOnly();
     public IReadOnlyList<Prescription> Prescriptions => _prescriptions.AsReadOnly();
@@ -127,21 +128,26 @@ public sealed class Attendance
 
     private void Apply(ChiefComplaintRegistered e)
     {
+        Id = e.AttendanceId;
         ChiefComplaint = e.ChiefComplaint;
     }
 
     private void Apply(DiagnosisRegistered e)
     {
+        Id = e.AttendanceId;
         _diagnoses.Add(e.Diagnosis);
     }
 
     private void Apply(PrescriptionIssued e)
     {
+        Id = e.AttendanceId;
         _prescriptions.Add(new Prescription(e.PrescriptionId, e.Medication, e.Dosage));
     }
 
     private void Apply(AttendanceClosed e)
     {
+        Id = e.AttendanceId;
+        ClosedBy = e.ClosedBy;
         Status = AttendanceStatus.Closed;
     }
 
