@@ -1,0 +1,10 @@
+﻿name: devclinic
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: P@ssw0rd
+    ports:
+      - "1433:1433"

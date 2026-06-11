@@ -7,10 +7,10 @@ namespace Devclinic.Appointments.Domain;
 
 public sealed class Appointment
 {
-    public AppointmentId Id { get; private set; }
-    public PatientId PatientId { get; private set; }
-    public DoctorId DoctorId { get; private set; }
-    public AppointmentTime Time { get; private set; }
+    public AppointmentId Id { get; private set; } = null!;
+    public PatientId PatientId { get; private set; } = null!;
+    public DoctorId DoctorId { get; private set; } = null!;
+    public AppointmentTime Time { get; private set; } = null!;
     public AppointmentStatus Status { get; private set; }
     public CancellationReason? CancellationReason { get; private set; }
 
@@ -21,6 +21,7 @@ public sealed class Appointment
     public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
     public void ClearDomainEvents() => _domainEvents.Clear();
 
+    private Appointment() { }
 
     public Appointment(
         AppointmentId id,
