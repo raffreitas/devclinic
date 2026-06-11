@@ -2,7 +2,6 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-using Devclinic.Appointments.Api;
 using Devclinic.Appointments.Domain.Events;
 using Devclinic.Appointments.Infrastructure.Data;
 using Devclinic.Appointments.Infrastructure.Messaging;

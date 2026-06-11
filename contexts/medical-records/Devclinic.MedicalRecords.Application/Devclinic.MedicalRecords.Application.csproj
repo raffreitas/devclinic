@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Devclinic.MedicalRecords.Domain\Devclinic.MedicalRecords.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
