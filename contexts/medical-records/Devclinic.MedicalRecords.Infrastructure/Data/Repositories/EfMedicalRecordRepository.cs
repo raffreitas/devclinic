@@ -1,8 +1,11 @@
 ﻿using Devclinic.MedicalRecords.Domain.Aggregates.MedicalRecords;
 using Devclinic.MedicalRecords.Domain.Aggregates.MedicalRecords.Abstractions;
+using Devclinic.MedicalRecords.Domain.Aggregates.MedicalRecords.Enums;
 using Devclinic.MedicalRecords.Domain.Aggregates.MedicalRecords.ValueObjects;
+using Devclinic.MedicalRecords.Domain.Shared.ValueObjects;
 using Devclinic.MedicalRecords.Infrastructure.Data.Models;
 using Devclinic.MedicalRecords.Infrastructure.Data.Serializers;
+using Devclinic.MedicalRecords.Infrastructure.EventSourcing.Abstractions;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +13,8 @@ namespace Devclinic.MedicalRecords.Infrastructure.Data.Repositories;
 
 internal sealed class EfMedicalRecordRepository(
     MedicalRecordsDbContext dbContext,
-    MedicalRecordsEventSerializer eventSerializer) : IMedicalRecordRepository
+    MedicalRecordsEventSerializer eventSerializer,
+    IProjectionDispatcher projectionDispatcher) : IMedicalRecordRepository
 {
     public async Task<MedicalRecord?> GetByIdAsync(MedicalRecordId id, CancellationToken cancellationToken)
     {
@@ -32,6 +36,15 @@ internal sealed class EfMedicalRecordRepository(
         return MedicalRecord.Reconstitute(domainEvents);
     }
 
+    public async Task<bool> ExistsByPatientIdAsync(PatientId patientId,
+        CancellationToken cancellationToken)
+    {
+        return await dbContext.MedicalRecordIndexes
+            .AsNoTracking()
+            .AnyAsync(x => x.PatientId == patientId.Value
+                           && x.Status == nameof(MedicalRecordStatus.Active), cancellationToken);
+    }
+
     public async Task SaveAsync(MedicalRecord medicalRecord, CancellationToken cancellationToken)
     {
         var uncommittedEvents = medicalRecord.UnpublishedEvents.ToArray();
@@ -46,26 +59,22 @@ internal sealed class EfMedicalRecordRepository(
 
         var version = currentVersion;
 
-        var storedEvents = uncommittedEvents
-            .Select(domainEvent =>
+        foreach (var domainEvent in uncommittedEvents)
+        {
+            var serializedEvent = eventSerializer.Serialize(domainEvent);
+
+            dbContext.MedicalRecordEvents.Add(new StoredMedicalRecordEvent
             {
-                version++;
+                AggregateId = medicalRecord.Id.Value,
+                Version = ++version,
+                EventType = serializedEvent.EventType,
+                Payload = serializedEvent.Payload,
+                OccurredAt = DateTime.UtcNow
+            });
 
-                var serializedEvent =
-                    eventSerializer.Serialize(domainEvent);
+            await projectionDispatcher.DispatchAsync(domainEvent, cancellationToken);
+        }
 
-                return new StoredMedicalRecordEvent
-                {
-                    AggregateId = medicalRecord.Id.Value,
-                    Version = version,
-                    EventType = serializedEvent.EventType,
-                    Payload = serializedEvent.Payload,
-                    OccurredAt = DateTime.UtcNow
-                };
-            })
-            .ToArray();
-
-        dbContext.MedicalRecordEvents.AddRange(storedEvents);
         await dbContext.SaveChangesAsync(cancellationToken);
         medicalRecord.ClearUnpublishedEvents();
     }

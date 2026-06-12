@@ -1,4 +1,5 @@
 ﻿using Devclinic.MedicalRecords.Infrastructure.Data.Models;
+using Devclinic.MedicalRecords.Infrastructure.EventSourcing.Projections;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -8,6 +9,7 @@ namespace Devclinic.MedicalRecords.Infrastructure.Data;
 public sealed class MedicalRecordsDbContext(DbContextOptions<MedicalRecordsDbContext> options) : DbContext(options)
 {
     public DbSet<StoredMedicalRecordEvent> MedicalRecordEvents => Set<StoredMedicalRecordEvent>();
+    public DbSet<MedicalRecordIndex> MedicalRecordIndexes => Set<MedicalRecordIndex>();
 
     public DbSet<StoredAttendanceEvent> AttendanceEvents => Set<StoredAttendanceEvent>();
 
@@ -18,6 +20,8 @@ public sealed class MedicalRecordsDbContext(DbContextOptions<MedicalRecordsDbCon
 
         modelBuilder.Entity<StoredAttendanceEvent>(builder
             => MapStoredEvent(builder, "AttendanceEvents"));
+
+        modelBuilder.Entity<MedicalRecordIndex>(MapMedicalRecordIndex);
     }
 
     private static void MapStoredEvent<T>(EntityTypeBuilder<T> builder, string tableName) where T : StoredEvent
@@ -47,5 +51,19 @@ public sealed class MedicalRecordsDbContext(DbContextOptions<MedicalRecordsDbCon
             .IsRequired();
 
         builder.HasIndex(x => new { x.AggregateId, x.Version }).IsUnique();
+    }
+
+    private static void MapMedicalRecordIndex(EntityTypeBuilder<MedicalRecordIndex> builder)
+    {
+        builder.ToTable("MedicalRecordIndexes");
+
+        builder.HasKey(x => x.MedicalRecordId);
+
+        builder.HasIndex(x => x.PatientId)
+            .IsUnique();
+
+        builder.Property(x => x.Status)
+            .HasMaxLength(32)
+            .IsRequired();
     }
 }

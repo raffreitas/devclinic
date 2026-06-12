@@ -1,7 +1,12 @@
-﻿using Devclinic.MedicalRecords.Domain.Aggregates.MedicalRecords.Abstractions;
+﻿using Devclinic.MedicalRecords.Application.Abstractions;
+using Devclinic.MedicalRecords.Domain.Aggregates.MedicalRecords.Abstractions;
 using Devclinic.MedicalRecords.Infrastructure.Data;
 using Devclinic.MedicalRecords.Infrastructure.Data.Repositories;
 using Devclinic.MedicalRecords.Infrastructure.Data.Serializers;
+using Devclinic.MedicalRecords.Infrastructure.EventSourcing.Abstractions;
+using Devclinic.MedicalRecords.Infrastructure.EventSourcing.Handlers;
+using Devclinic.MedicalRecords.Infrastructure.EventSourcing.Handlers.Common;
+using Devclinic.MedicalRecords.Infrastructure.Services;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +23,18 @@ public static class DependencyInjection
 
         services.AddSingleton(new MedicalRecordsEventSerializer());
         services.AddScoped<IMedicalRecordRepository, EfMedicalRecordRepository>();
+
+        services.AddSingleton<IPatientService, InMemoryPatientService>();
+        
+        services.AddScoped<IProjectionDispatcher, ProjectionDispatcher>();
+
+        services.AddScoped<
+            IProjectionHandler,
+            MedicalRecordCreatedProjectionHandler>();
+
+        services.AddScoped<
+            IProjectionHandler,
+            MedicalRecordClosedProjectionHandler>();
 
         return services;
     }
