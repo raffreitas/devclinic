@@ -13,6 +13,7 @@
     <Project Path="contexts/medical-records/Devclinic.MedicalRecords.Application/Devclinic.MedicalRecords.Application.csproj" />
     <Project Path="contexts/medical-records/Devclinic.MedicalRecords.Domain/Devclinic.MedicalRecords.Domain.csproj" />
     <Project Path="contexts/medical-records/Devclinic.MedicalRecords.Infrastructure/Devclinic.MedicalRecords.Infrastructure.csproj" />
+    <Project Path="contexts/medical-records/Devclinic.MedicalRecords.IntegrationTests/Devclinic.MedicalRecords.IntegrationTests.csproj" />
     <Project Path="contexts/medical-records/Devclinic.MedicalRecords.UnitTests/Devclinic.MedicalRecords.UnitTests.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
