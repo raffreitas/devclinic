@@ -8,7 +8,7 @@ public sealed record CloseMedicalRecordCommand(
     Guid MedicalRecordId,
     string Reason);
 
-internal sealed class CloseMedicalRecordUseCase(IMedicalRecordRepository medicalRecordRepository)
+public sealed class CloseMedicalRecordUseCase(IMedicalRecordRepository medicalRecordRepository)
 {
     public async Task ExecuteAsync(CloseMedicalRecordCommand command, CancellationToken ct = default)
     {
