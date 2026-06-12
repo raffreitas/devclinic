@@ -25,7 +25,8 @@ public static class DependencyInjection
         services.AddScoped<IMedicalRecordRepository, EfMedicalRecordRepository>();
 
         services.AddSingleton<IPatientService, InMemoryPatientService>();
-        
+        services.AddSingleton<IMedicalRecordAccessService, InMemoryMedicalRecordAccessService>();
+
         services.AddScoped<IProjectionDispatcher, ProjectionDispatcher>();
 
         services.AddScoped<

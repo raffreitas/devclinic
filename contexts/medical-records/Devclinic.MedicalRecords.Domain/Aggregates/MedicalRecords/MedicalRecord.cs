@@ -35,7 +35,7 @@ public sealed class MedicalRecord
         return medicalRecord;
     }
 
-    public void RegisterAllergy(Allergy allergy)
+    public void RegisterAllergy(Allergy allergy, DoctorId doctorId)
     {
         if (Status == MedicalRecordStatus.Closed)
             throw new DomainException("Cannot modify a closed medical record.");
@@ -43,7 +43,7 @@ public sealed class MedicalRecord
         if (_allergies.Contains(allergy))
             throw new DomainException($"Allergy to '{allergy.Substance}' is already registered.");
 
-        Raise(new AllergyRegistered(Id, allergy, DateTime.UtcNow));
+        Raise(new AllergyRegistered(Id, doctorId, allergy, DateTime.UtcNow));
     }
 
     public void Close(MedicalRecordClosureReason reason)
@@ -87,11 +87,13 @@ public sealed class MedicalRecord
 
     private void Apply(AllergyRegistered e)
     {
+        Id = e.MedicalRecordId;
         _allergies.Add(e.Allergy);
     }
 
     private void Apply(MedicalRecordClosed e)
     {
+        Id = e.MedicalRecordId;
         Status = MedicalRecordStatus.Closed;
     }
 
