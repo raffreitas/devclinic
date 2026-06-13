@@ -8,6 +8,7 @@
     <Project Path="contexts/appointments/Devclinic.Appointments.IntegrationTests/Devclinic.Appointments.IntegrationTests.csproj" />
     <Project Path="contexts/appointments/Devclinic.Appointments.UnitTests/Devclinic.Appointments.UnitTests.csproj" />
   </Folder>
+  <Folder Name="/Contexts/Billing/" />
   <Folder Name="/Contexts/MedicalRecords/">
     <Project Path="contexts/medical-records/Devclinic.MedicalRecords.Api/Devclinic.MedicalRecords.Api.csproj" />
     <Project Path="contexts/medical-records/Devclinic.MedicalRecords.Application/Devclinic.MedicalRecords.Application.csproj" />
@@ -16,6 +17,7 @@
     <Project Path="contexts/medical-records/Devclinic.MedicalRecords.IntegrationTests/Devclinic.MedicalRecords.IntegrationTests.csproj" />
     <Project Path="contexts/medical-records/Devclinic.MedicalRecords.UnitTests/Devclinic.MedicalRecords.UnitTests.csproj" />
   </Folder>
+  <Folder Name="/Contexts/Notifications/" />
   <Folder Name="/Solution Items/">
     <File Path="compose.yaml" />
   </Folder>
