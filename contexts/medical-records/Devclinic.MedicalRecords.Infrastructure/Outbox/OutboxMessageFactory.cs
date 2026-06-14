@@ -25,7 +25,7 @@ internal static class OutboxMessageFactory
         var eventId = Guid.CreateVersion7();
 
         var integrationEvent = new AttendanceClosedIntegrationEvent(
-            EventId: Guid.CreateVersion7(),
+            EventId: eventId,
             EventType: "attendance-closed.v1",
             OccurredAt: domainEvent.OccurredAt,
             AttendanceId: domainEvent.AttendanceId.Value,

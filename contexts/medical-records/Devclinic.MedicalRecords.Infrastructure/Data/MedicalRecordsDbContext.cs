@@ -77,6 +77,12 @@ public sealed class MedicalRecordsDbContext(DbContextOptions<MedicalRecordsDbCon
 
         builder.HasKey(x => x.Id);
 
+        builder.Property(x => x.EventId)
+            .IsRequired();
+
+        builder.HasIndex(x => x.EventId)
+            .IsUnique();
+
         builder.Property(x => x.Type)
             .HasMaxLength(256)
             .IsRequired();
