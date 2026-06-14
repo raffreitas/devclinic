@@ -1,5 +1,6 @@
 ﻿using Devclinic.MedicalRecords.Infrastructure.Data.Models;
 using Devclinic.MedicalRecords.Infrastructure.EventSourcing.Projections;
+using Devclinic.MedicalRecords.Infrastructure.Outbox;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -8,6 +9,7 @@ namespace Devclinic.MedicalRecords.Infrastructure.Data;
 
 public sealed class MedicalRecordsDbContext(DbContextOptions<MedicalRecordsDbContext> options) : DbContext(options)
 {
+    public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
     public DbSet<StoredMedicalRecordEvent> MedicalRecordEvents => Set<StoredMedicalRecordEvent>();
     public DbSet<MedicalRecordIndex> MedicalRecordIndexes => Set<MedicalRecordIndex>();
 
@@ -20,6 +22,8 @@ public sealed class MedicalRecordsDbContext(DbContextOptions<MedicalRecordsDbCon
 
         modelBuilder.Entity<StoredAttendanceEvent>(builder
             => MapStoredEvent(builder, "AttendanceEvents"));
+
+        modelBuilder.Entity<OutboxMessage>(MapOutboxMessage);
 
         modelBuilder.Entity<MedicalRecordIndex>(MapMedicalRecordIndex);
     }
@@ -65,5 +69,33 @@ public sealed class MedicalRecordsDbContext(DbContextOptions<MedicalRecordsDbCon
         builder.Property(x => x.Status)
             .HasMaxLength(32)
             .IsRequired();
+    }
+
+    private static void MapOutboxMessage(EntityTypeBuilder<OutboxMessage> builder)
+    {
+        builder.ToTable("OutboxMessages");
+
+        builder.HasKey(x => x.Id);
+
+        builder.Property(x => x.Type)
+            .HasMaxLength(256)
+            .IsRequired();
+
+        builder.Property(x => x.Payload)
+            .HasColumnType("JSON")
+            .IsRequired();
+
+        builder.Property(x => x.OccurredAt)
+            .IsRequired();
+
+        builder.Property(x => x.ProcessedAt);
+
+        builder.Property(x => x.Attempts)
+            .IsRequired();
+
+        builder.Property(x => x.LastError)
+            .HasMaxLength(4000);
+
+        builder.HasIndex(x => x.ProcessedAt);
     }
 }

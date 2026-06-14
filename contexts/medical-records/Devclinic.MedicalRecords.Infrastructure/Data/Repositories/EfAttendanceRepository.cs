@@ -3,6 +3,7 @@ using Devclinic.MedicalRecords.Domain.Aggregates.Attendances.Abstractions;
 using Devclinic.MedicalRecords.Domain.Aggregates.Attendances.ValueObjects;
 using Devclinic.MedicalRecords.Infrastructure.Data.Models;
 using Devclinic.MedicalRecords.Infrastructure.Data.Serializers;
+using Devclinic.MedicalRecords.Infrastructure.Outbox;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -58,6 +59,11 @@ internal sealed class EfAttendanceRepository(
                 Payload = serializedEvent.Payload,
                 OccurredAt = DateTime.UtcNow
             });
+
+            var outboxMessage = OutboxMessageFactory.FromDomainEvent(attendance, domainEvent);
+
+            if (outboxMessage is not null)
+                dbContext.OutboxMessages.Add(outboxMessage);
         }
 
         await dbContext.SaveChangesAsync(cancellationToken);
