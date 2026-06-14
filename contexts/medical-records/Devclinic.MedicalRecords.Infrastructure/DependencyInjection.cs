@@ -8,6 +8,8 @@ using Devclinic.MedicalRecords.Infrastructure.Data.Serializers;
 using Devclinic.MedicalRecords.Infrastructure.EventSourcing.Abstractions;
 using Devclinic.MedicalRecords.Infrastructure.EventSourcing.Handlers;
 using Devclinic.MedicalRecords.Infrastructure.EventSourcing.Handlers.Common;
+using Devclinic.MedicalRecords.Infrastructure.MessageBus;
+using Devclinic.MedicalRecords.Infrastructure.Outbox;
 using Devclinic.MedicalRecords.Infrastructure.Services;
 
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +43,10 @@ public static class DependencyInjection
         services.AddScoped<
             IProjectionHandler,
             MedicalRecordClosedProjectionHandler>();
+
+        services.AddScoped<IOutboxRepository, EfOutboxRepository>();
+        services.AddSingleton<IMessageBus, LoggingMessageBus>();
+        services.AddHostedService<PublishOutboxMessagesWorker>();
 
         return services;
     }
