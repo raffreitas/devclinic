@@ -1,5 +1,7 @@
-﻿using Devclinic.MedicalRecords.Application.Abstractions;
+using Devclinic.MedicalRecords.Application.Abstractions;
+using Devclinic.MedicalRecords.Domain.Aggregates.Attendances.Abstractions;
 using Devclinic.MedicalRecords.Domain.Aggregates.MedicalRecords.Abstractions;
+using Devclinic.MedicalRecords.Domain.Services;
 using Devclinic.MedicalRecords.Infrastructure.Data;
 using Devclinic.MedicalRecords.Infrastructure.Data.Repositories;
 using Devclinic.MedicalRecords.Infrastructure.Data.Serializers;
@@ -22,7 +24,10 @@ public static class DependencyInjection
             options.UseSqlServer(configuration.GetConnectionString("DatabaseConnection")));
 
         services.AddSingleton(new MedicalRecordsEventSerializer());
+        services.AddSingleton(new AttendanceEventSerializer());
         services.AddScoped<IMedicalRecordRepository, EfMedicalRecordRepository>();
+        services.AddScoped<IAttendanceRepository, EfAttendanceRepository>();
+        services.AddSingleton<PrescriptionService>();
 
         services.AddSingleton<IPatientService, InMemoryPatientService>();
         services.AddSingleton<IMedicalRecordAccessService, InMemoryMedicalRecordAccessService>();
